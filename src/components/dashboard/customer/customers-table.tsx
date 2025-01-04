@@ -15,7 +15,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
-
+import Button from '@mui/material/Button';
 import { useSelection } from '@/hooks/use-selection';
 
 function noop(): void {
@@ -37,6 +37,7 @@ interface CustomersTableProps {
   page?: number;
   rows?: Customer[];
   rowsPerPage?: number;
+  onEdit?: (customer: Customer) => void;
 }
 
 export function CustomersTable({
@@ -44,6 +45,7 @@ export function CustomersTable({
   rows = [],
   page = 0,
   rowsPerPage = 0,
+  onEdit, // Aquí recibimos la función `onEdit`
 }: CustomersTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
@@ -78,6 +80,7 @@ export function CustomersTable({
               <TableCell>Location</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Signed Up</TableCell>
+              <TableCell>Actions</TableCell> {/* Nueva columna para acciones */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -110,6 +113,12 @@ export function CustomersTable({
                   </TableCell>
                   <TableCell>{row.phone}</TableCell>
                   <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
+                  <TableCell>
+                    {/* Aquí usamos `row` en lugar de `customer` */}
+                    <Button onClick={() => onEdit?.(row)} variant="outlined">
+                      Edit
+                    </Button>
+                  </TableCell>
                 </TableRow>
               );
             })}
