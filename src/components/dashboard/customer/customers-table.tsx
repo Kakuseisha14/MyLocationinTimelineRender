@@ -33,19 +33,25 @@ export interface Customer {
 }
 
 interface CustomersTableProps {
-  count?: number;
-  page?: number;
-  rows?: Customer[];
-  rowsPerPage?: number;
+  count: number;
+  page: number;
+  rows: Customer[];
+  rowsPerPage: number;
+  onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
+  onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEdit?: (customer: Customer) => void;
+  onDelete: (customerId: string) => void;
 }
 
 export function CustomersTable({
-  count = 0,
-  rows = [],
-  page = 0,
-  rowsPerPage = 0,
-  onEdit, // Aquí recibimos la función `onEdit`
+  count,
+  page,
+  rows,
+  rowsPerPage,
+  onPageChange,
+  onRowsPerPageChange,
+  onEdit,
+  onDelete,
 }: CustomersTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
@@ -80,7 +86,7 @@ export function CustomersTable({
               <TableCell>Location</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Signed Up</TableCell>
-              <TableCell>Actions</TableCell> {/* Nueva columna para acciones */}
+              <TableCell >Actions</TableCell> {/* Nueva columna para acciones */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -114,10 +120,19 @@ export function CustomersTable({
                   <TableCell>{row.phone}</TableCell>
                   <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
                   <TableCell>
-                    {/* Aquí usamos `row` en lugar de `customer` */}
+                    <Stack direction="row" spacing={1}>
+                      {/* Aquí usamos `row` en lugar de `customer` */}
                     <Button onClick={() => onEdit?.(row)} variant="outlined">
                       Edit
                     </Button>
+                      <Button
+                        onClick={() => onDelete(row.id)}
+                        variant="outlined"
+                        color="error"
+                      >
+                        Delete
+                      </Button>
+                    </Stack>
                   </TableCell>
                 </TableRow>
               );
@@ -127,13 +142,13 @@ export function CustomersTable({
       </Box>
       <Divider />
       <TablePagination
-        component="div"
-        count={count}
-        onPageChange={noop}
-        onRowsPerPageChange={noop}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+         component="div"
+         count={count}
+         page={page}
+         rowsPerPage={rowsPerPage}
+         onPageChange={onPageChange}
+         onRowsPerPageChange={onRowsPerPageChange}
+         rowsPerPageOptions={[5, 10, 25]}
       />
     </Card>
   );
