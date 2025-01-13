@@ -70,7 +70,7 @@ export function SideNav(): React.JSX.Element {
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Devias
+              Veccit DevopS 
             </Typography>
           </Box>
           <CaretUpDownIcon />
@@ -81,7 +81,7 @@ export function SideNav(): React.JSX.Element {
         {renderNavItems({ pathname, items: navItems })}
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
-      <Stack spacing={2} sx={{ p: '12px' }}>
+      <Stack spacing={2} sx={{ p: '12px', display: 'none' }}>
         <div>
           <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
             Need more features?
