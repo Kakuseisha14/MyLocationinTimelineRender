@@ -1,9 +1,6 @@
-
 "use client";
+
 import React, { useState } from 'react';
-
-
-//import type { Metadata } from 'next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
@@ -15,17 +12,11 @@ import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import dayjs from 'dayjs';
 
-
-
-
 import { config } from '@/config';
 import { HistoryCard } from '@/components/dashboard/historys/history-card';
 import type { History } from '@/components/dashboard/historys/history-card';
 import { CompaniesFilters } from '@/components/dashboard/historys/history-filters';
 import CustomerFormModal from '@/components/dashboard/historys/CustomerFormModal';
-
-
-
 
 //export const metadata = { title: `Integrations | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -82,6 +73,13 @@ const historys = [
 
 export default function Page(): React.JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleEventAdded = () => {
+    // Lógica para actualizar la lista de eventos
+    console.log('Evento agregado con éxito');
+    setIsModalOpen(false); // Cierra el modal después de agregar el evento
+  };
+
   return (
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
@@ -102,10 +100,10 @@ export default function Page(): React.JSX.Element {
           </Button>
         </div>
         <CustomerFormModal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        
-      />
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onEventAdded={handleEventAdded}
+        />
       </Stack>
       <CompaniesFilters />
       <Grid container spacing={3}>

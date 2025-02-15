@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const customerRoutes = require('./routes/customerRoutes');
+const historyRoutes = require('./routes/historyRoutes');
 const db = require('./config/db');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors({
 
 // ✅ Middleware para parsear JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Para manejar formularios con datos codificados en URL
 
 // ✅ Conectar a la base de datos
 db.connect((err) => {
@@ -27,6 +29,7 @@ db.connect((err) => {
 
 // ✅ Rutas principales
 app.use('/api/customers', customerRoutes);
+app.use('/api/history-events', historyRoutes);
 
 // ✅ Ruta principal
 app.get('/', (req, res) => {

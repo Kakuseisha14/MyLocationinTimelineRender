@@ -12,20 +12,20 @@ import {
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 
-
-interface CustomerFormModalProps {
+interface HistoryEventFormModalProps {
   open: boolean;
   onClose: () => void;
-  onCustomerAdded: () => void;
-  customerToEdit?: Customer | null;
+  onEventAdded: () => void;
+  eventToEdit?: HistoryEvent | null;
 }
 
-interface Customer {
+interface HistoryEvent {
   id: number;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
+  titulo: string;
+  affected_personnel: string;
+  fecha: string;
+  fragmento: string;
+  img?: File;
 }
 
 const modalStyle = {
@@ -40,42 +40,42 @@ const modalStyle = {
   borderRadius: 2,
 };
 
-export default function CustomerFormModal({
+export default function HistoryEventFormModal({
   open,
   onClose,
-  onCustomerAdded,
-  customerToEdit,
-}: CustomerFormModalProps) {
+  onEventAdded,
+  eventToEdit,
+}: HistoryEventFormModalProps) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
+    titulo: '',
+    affected_personnel: '',
+    fecha: '',
+    fragmento: '',
+    img: undefined as File | undefined,
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Reinicia el formulario al abrir el modal
   useEffect(() => {
-    if (customerToEdit) {
-      // Si hay cliente a editar, carga sus datos en el formulario
+    if (eventToEdit) {
       setFormData({
-        name: customerToEdit.name,
-        email: customerToEdit.email,
-        phone: customerToEdit.phone,
-        address: customerToEdit.address,
+        titulo: eventToEdit.titulo,
+        affected_personnel: eventToEdit.affected_personnel,
+        fecha: eventToEdit.fecha,
+        fragmento: eventToEdit.fragmento,
+        img: undefined,
       });
     } else {
-      // Si no hay cliente a editar, limpia el formulario
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
+        titulo: '',
+        affected_personnel: '',
+        fecha: '',
+        fragmento: '',
+        img: undefined,
       });
     }
-  }, [customerToEdit]);
+  }, [eventToEdit]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,42 +84,55 @@ export default function CustomerFormModal({
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setFormData({ ...formData, imageName: file.name });
+      setFormData({ ...formData, img: event.target.files[0] });
     }
   };
-  
 
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
 
-    // Validación básica para campos requeridos
-    if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+    if (!formData.titulo || !formData.affected_personnel || !formData.fecha || !formData.fragmento) {
       setError('All fields are required');
       setLoading(false);
       return;
     }
 
+    const formPayload = new FormData();
+    formPayload.append('titulo', formData.titulo);
+    formPayload.append('affected_personnel', formData.affected_personnel);
+    formPayload.append('fecha', formData.fecha);
+    formPayload.append('fragmento', formData.fragmento);
+    if (formData.img) {
+      formPayload.append('img', formData.img);
+    }
+
+    console.log('Form Data:', {
+      titulo: formData.titulo,
+      affected_personnel: formData.affected_personnel,
+      fecha: formData.fecha,
+      fragmento: formData.fragmento,
+      img: formData.img ? formData.img.name : 'No Image',
+    });
+
     try {
-      if (customerToEdit) {
-        // Editar cliente
-        console.log('Editing customer:', formData);
+      if (eventToEdit) {
         await axios.put(
-          `http://localhost:5000/api/customers/${customerToEdit.id}`,
-          formData
+          `http://localhost:5000/api/history-events/${eventToEdit.id}`,
+          formPayload,
+          { headers: { 'Content-Type': 'multipart/form-data' } }
         );
       } else {
-        // Crear cliente
-        console.log('Creating new customer:', formData);
-        await axios.post('http://localhost:5000/api/customers', formData);
+        await axios.post('http://localhost:5000/api/history-events', formPayload, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
       }
 
-      onCustomerAdded(); // Actualizar la lista de clientes en el componente padre
-      onClose(); // Cerrar el modal
+      onEventAdded();
+      onClose();
     } catch (err) {
-      console.error('Error saving customer:', err);
-      setError('Failed to save customer');
+      console.error('Error saving event:', err);
+      setError('Failed to save event');
     } finally {
       setLoading(false);
     }
@@ -127,92 +140,76 @@ export default function CustomerFormModal({
 
   return (
     <Modal open={open} onClose={onClose}>
-  <Box sx={modalStyle}>
-    <Typography variant="h6" mb={2}>
-      {customerToEdit ? 'Edit Customer' : 'Add Historical Event'}
-    </Typography>
-    <Stack spacing={3}>
-      {/* Fila con Título, Personal Afectado y Fecha Actualizada */}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+      <Box sx={modalStyle}>
+        <Typography variant="h6" mb={2}>
+          {eventToEdit ? 'Edit Historical Event' : 'Add Historical Event'}
+        </Typography>
+        <Stack spacing={3}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <TextField
+                label="Title"
+                name="titulo"
+                value={formData.titulo}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                label="Affected Personnel"
+                name="affected_personnel"
+                value={formData.affected_personnel}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                label="Updated Date"
+                type="date"
+                name="fecha"
+                value={formData.fecha}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+
           <TextField
-            label="Title"
-            name="name"
-            value={formData.name}
+            label="Story Fragment"
+            name="fragmento"
+            value={formData.fragmento}
             onChange={handleChange}
+            multiline
+            rows={4}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="Affected Personnel"
-            name="personnel"
-            value={formData.personnel}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
-            label="Updated Date"
-            type="date"
-            name="updatedDate"
-            value={formData.updatedDate}
-            onChange={handleChange}
-            InputLabelProps={{ shrink: true }} // Hace que el label no se superponga al valor
-            fullWidth
-          />
-        </Grid>
-      </Grid>
 
-      {/* Campo de texto para fragmento de historia */}
-      <TextField
-        label="Story Fragment"
-        name="storyFragment"
-        value={formData.storyFragment}
-        onChange={handleChange}
-        multiline
-        rows={4} // Especifica la altura del textarea
-        fullWidth
-      />
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Button variant="contained" component="label">
+              Upload Image
+              <input
+                type="file"
+                name="img"
+                accept="image/*"
+                hidden
+                onChange={handleFileChange}
+              />
+            </Button>
+            {formData.img && (
+              <Typography variant="body2">File: {formData.img.name}</Typography>
+            )}
+          </Stack>
 
-      {/* Botón para subir imagen */}
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Button variant="contained" component="label">
-          Upload Image
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            hidden
-            onChange={handleFileChange} // Evento para manejar la carga de archivos
-          />
-        </Button>
-        {formData.imageName && (
-          <Typography variant="body2">File: {formData.imageName}</Typography>
-        )}
-      </Stack>
+          {error && <Typography color="error">{error}</Typography>}
 
-      {/* Mostrar error si existe */}
-      {error && <Typography color="error">{error}</Typography>}
-
-      {/* Botón de acción (Añadir o Actualizar) */}
-      <Button
-        variant="contained"
-        onClick={handleSubmit}
-        disabled={loading}
-      >
-        {loading
-          ? customerToEdit
-            ? 'Updating...'
-            : 'Adding...'
-          : customerToEdit
-          ? 'Update Customer'
-          : 'Add Event'}
-      </Button>
-    </Stack>
-  </Box>
-</Modal>
-
+          <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+            {loading ? (eventToEdit ? 'Updating...' : 'Adding...') : eventToEdit ? 'Update Event' : 'Add Event'}
+          </Button>
+        </Stack>
+      </Box>
+    </Modal>
   );
 }
