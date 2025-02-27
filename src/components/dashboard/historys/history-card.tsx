@@ -24,6 +24,8 @@ export interface HistoryCardProps {
 }
 
 export function HistoryCard({ history }: HistoryCardProps): React.JSX.Element {
+   // Imprime los datos recibidos para depuración
+   console.log('HistoryCard received:', history)
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <CardContent sx={{ flex: '1 1 auto' }}>

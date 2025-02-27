@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const customerRoutes = require('./routes/customerRoutes');
 const historyRoutes = require('./routes/historyRoutes');
@@ -17,6 +18,8 @@ app.use(cors({
 // ✅ Middleware para parsear JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para manejar formularios con datos codificados en URL
+// Middleware para servir archivos estáticos
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ✅ Conectar a la base de datos
 db.connect((err) => {
@@ -30,6 +33,7 @@ db.connect((err) => {
 // ✅ Rutas principales
 app.use('/api/customers', customerRoutes);
 app.use('/api/history-events', historyRoutes);
+
 
 // ✅ Ruta principal
 app.get('/', (req, res) => {
