@@ -7,6 +7,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
+
 import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Download';
 import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
@@ -23,20 +24,45 @@ import fetchHistorys from '@/components/dashboard/historys/historyData';
 export default function Page(): React.JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [historys, setHistorys] = useState<History[]>([]);
+  const [filteredHistorys, setFilteredHistorys] = useState<History[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(6);
 
   useEffect(() => {
     fetchHistorys().then((data) => {
-      
       setHistorys(data);
+      setFilteredHistorys(data);
     });
   }, []);
 
   const handleEventAdded = () => {
-    // Lógica para actualizar la lista de eventos
     console.log('Evento agregado con éxito');
-    setIsModalOpen(false); // Cierra el modal después de agregar el evento
-    fetchHistorys().then((data) => setHistorys(data)); // Actualiza la lista de eventos
+    setIsModalOpen(false);
+    fetchHistorys().then((data) => {
+      setHistorys(data);
+      setFilteredHistorys(data);
+    });
   };
+
+ 
+  const handleSearch = (searchTerm: string) => {
+    const filtered = historys.filter((history) =>
+      history.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      history.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredHistorys(filtered);
+  };
+
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  };
+
+  // Calcular los elementos a mostrar en la página actual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredHistorys.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredHistorys.length / itemsPerPage);
 
   return (
     <Stack spacing={3}>
@@ -63,16 +89,23 @@ export default function Page(): React.JSX.Element {
           onEventAdded={handleEventAdded}
         />
       </Stack>
-      <CompaniesFilters />
+      {/* Filtros */}
+  
+      <CompaniesFilters onSearch={handleSearch}  />
       <Grid container spacing={3}>
-        {historys.map((history) => (
+        {filteredHistorys.map((history) => (
           <Grid key={history.id} lg={4} md={6} xs={12}>
             <HistoryCard history={history} />
           </Grid>
         ))}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Pagination count={3} size="small" />
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handleChangePage}
+          size="small"
+        />
       </Box>
     </Stack>
   );
