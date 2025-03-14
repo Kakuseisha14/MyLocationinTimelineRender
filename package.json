@@ -1,9 +1,9 @@
 {
-  "name": "material-kit-react",
+  "name": "MyLocationinTimeline",
   "version": "4.0.0",
-  "author": "Devias",
-  "licence": "MIT",
-  "homepage": "https://devias.io",
+  "author": "VeccitDevopS",
+  "licence": "Veccit",
+  "homepage": "https://veccit.netlify.app/",
   "private": false,
   "scripts": {
     "dev": "next dev",
