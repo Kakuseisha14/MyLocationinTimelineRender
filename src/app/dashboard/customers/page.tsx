@@ -8,6 +8,11 @@ import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import axios from 'axios';
 
 
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
+
 import { CustomersFilters } from '@/components/dashboard/customer/customers-filters';
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import type { Customer } from '@/components/dashboard/customer/customers-table';
@@ -128,6 +133,7 @@ const handleCustomerAdded = () => {
 
 
 
+
   
 
   // Datos paginados
@@ -135,16 +141,29 @@ const handleCustomerAdded = () => {
 
   return (
     <Stack spacing={3}>
-      <Stack direction="row" spacing={3}>
-        <Typography variant="h4">Customers</Typography>
-        <Button
-          startIcon={<PlusIcon />}
-          variant="contained"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Add
-        </Button>
-      </Stack>
+    {/* Título y Botón en una fila */}
+    <Stack direction="row" spacing={3} alignItems="center">
+      <Typography variant="h4">Important People</Typography>
+      <Button
+        startIcon={<PlusIcon />}
+        variant="contained"
+        onClick={() => setIsModalOpen(true)}
+      >
+        Add
+      </Button>
+    </Stack>
+    
+    {/* Tarjeta debajo del botón */}
+    <Card sx={{ minWidth: 275 }}>
+      <CardContent>
+        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+          Historic Brands
+        </Typography>
+        <Typography variant="h5" component="div">
+        The most important people in the world can be political leaders, scientists, artists, religious leaders, or businessmen !
+        </Typography>
+      </CardContent>
+    </Card>
       {/* Filtros */}
       <CustomersFilters onSearchChange={handleSearchChange} />
       {/* Tabla */}
