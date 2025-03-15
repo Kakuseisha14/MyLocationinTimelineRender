@@ -7,6 +7,11 @@ import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare';
 import { FolderSimpleLock as FolderSimpleLockIcon } from '@phosphor-icons/react/dist/ssr/FolderSimpleLock';
 
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+
+
 export const navIcons = {
   'chart-pie': ChartPieIcon,
   'gear-six': GearSixIcon,
@@ -15,4 +20,8 @@ export const navIcons = {
   'foldersimplelockicon': FolderSimpleLockIcon,
   user: UserIcon,
   users: UsersIcon,
+  'habits': AppRegistrationIcon,
+  'finances': AssuredWorkloadIcon,
+  'finances': AssuredWorkloadIcon,
+  'projects': AccountTreeIcon,
 } as Record<string, Icon>;

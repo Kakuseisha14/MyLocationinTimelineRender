@@ -196,7 +196,7 @@ const handleCustomerAdded = () => {
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this customer? This action cannot be undone.
+            Are you sure you want to delete this character? This action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
