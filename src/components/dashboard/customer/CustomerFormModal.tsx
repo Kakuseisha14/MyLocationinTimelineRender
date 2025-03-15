@@ -118,8 +118,8 @@ export default function CustomerFormModal({
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={modalStyle}>
-        <Typography variant="h6" mb={2}>
-          {customerToEdit ? 'Edit Customer' : 'Add New Customer'}
+        <Typography variant="h6" mb={2}>  
+          {customerToEdit ? 'Edit Character' : 'Add New Character'}
         </Typography>
         <Stack spacing={2}>
           <TextField
@@ -161,8 +161,8 @@ export default function CustomerFormModal({
                 ? 'Updating...'
                 : 'Adding...'
               : customerToEdit
-              ? 'Update Customer'
-              : 'Add Customer'}
+              ? 'Update Character'
+              : 'Add Character'}
           </Button>
         </Stack>
       </Box>
