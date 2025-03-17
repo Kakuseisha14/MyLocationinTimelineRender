@@ -6,9 +6,9 @@ export const navItems = [
   { key: 'overview', title: 'Overview', href: paths.dashboard.overview, icon: 'chart-pie' },
   { key: 'customers', title: 'Outstanding Leaders', href: paths.dashboard.customers, icon: 'users' },
 
-  { key: 'habits', title: 'Habits', href: paths.dashboard.customers, icon: 'habits' },
-  { key: 'finances', title: 'Personal Finances', href: paths.dashboard.customers, icon: 'finances' },
-  { key: 'projects', title: 'Projects', href: paths.dashboard.customers, icon: 'projects' },
+  { key: 'habits', title: 'Habits', href: paths.dashboard.habits, icon: 'habits' },
+  { key: 'finances', title: 'Personal Finances', href: paths.dashboard.finances, icon: 'finances' },
+  { key: 'projects', title: 'Projects', href: paths.dashboard.projects, icon: 'projects' },
 
 
 
