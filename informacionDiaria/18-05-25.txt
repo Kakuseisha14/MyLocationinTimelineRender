@@ -1,0 +1,16 @@
+La tarea que estaremos desarrollando el dia de hoy seran:
+
+1.-Revision de todo el sistema
+2.-Iniciar a trabajar en el registro de los Habitos
+2.1.-Insertar imagen y titulo y que sea un clickleable para ir al 
+cuerpo y el desarrollo del habito
+2.2.-Crear una ventana la cual sera el cuerpo en desarrollo del habito
+3.-Crear Ventana para "Finanzas Personales"
+4.-Crear una Ventana para "Projects"
+
+--Desarrollo de la actividad Habitos ACTIVIDAD 2 y todos los necesario
+*Desarrollo y visualizacion de la Ventana
+*Planos de actividades, es decir, progreso del habito
+*Calendario
+
+

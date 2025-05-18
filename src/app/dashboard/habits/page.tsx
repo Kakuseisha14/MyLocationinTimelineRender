@@ -241,7 +241,7 @@ const handleCustomerAdded = () => {
 const itemData = [
   {
     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
+    title: 'Veccit',
     author: '@bkristastucchio',
     rows: 2,
     cols: 2,
