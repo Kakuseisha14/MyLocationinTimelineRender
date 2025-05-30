@@ -1,0 +1,9 @@
+Importante añadir una seccion dedicada a la musica
+
+Donde se podra clasifiar segun nuestros gustos
+
+Cantantes o Compositores asi como bandas o grupos musicales
+
+Origen y demas informacion
+
+tambien incluye reproductores entre otras funcionalidades
