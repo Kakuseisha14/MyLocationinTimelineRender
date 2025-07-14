@@ -10,10 +10,11 @@ const app = express();
 
 // ✅ Configurar CORS
 app.use(cors({
-  origin: 'http://localhost:3000', // Permitir solicitudes desde tu frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  credentials: true // Permitir cookies y encabezados de autorización
+  origin: 'https://veccit-frontend.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
 
 // ✅ Middleware para parsear JSON
 app.use(express.json());
@@ -52,7 +53,8 @@ app.use((err, req, res, next) => {
 });
 
 // ✅ Iniciar el servidor
-const PORT = process.env.PORT || 5000;
+//const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
