@@ -39,7 +39,7 @@ export default function Page(): React.JSX.Element {
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
   const [customerToEdit, setCustomerToEdit] = React.useState<Customer | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [customerIdToDelete, setCustomerIdToDelete] = useState<string | null>(null);
+  const [customerIdToDelete, setCustomerIdToDelete] = useState<number | null>(null);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -75,7 +75,7 @@ const handleEditCustomer = (customer: Customer) => {
 };
 
 // Solicitar confirmación para eliminar cliente
-const handleDeleteCustomerConfirmation = (customerId: string) => {
+const handleDeleteCustomerConfirmation = (customerId: number) => {
   setCustomerIdToDelete(customerId);
   setIsDeleteDialogOpen(true);
 };

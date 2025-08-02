@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Icon } from '@phosphor-icons/react/dist/lib/types';
 import { ChartPie as ChartPieIcon } from '@phosphor-icons/react/dist/ssr/ChartPie';
 import { GearSix as GearSixIcon } from '@phosphor-icons/react/dist/ssr/GearSix';
@@ -22,6 +23,5 @@ export const navIcons = {
   users: UsersIcon,
   'habits': AppRegistrationIcon,
   'finances': AssuredWorkloadIcon,
-  'finances': AssuredWorkloadIcon,
   'projects': AccountTreeIcon,
-} as Record<string, Icon>;
+} as Record<string, React.ElementType>;

@@ -40,7 +40,7 @@ interface CustomersTableProps {
   onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
   onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEdit?: (customer: Customer) => void;
-  onDelete: (customerId: string) => void;
+  onDelete: (customerId: number) => void;
 }
 
 export function CustomersTable({
