@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api/customers'; // Backend
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/customers`; // Backend
 
 // Obtener todos los clientes
 export const fetchCustomers = async () => {

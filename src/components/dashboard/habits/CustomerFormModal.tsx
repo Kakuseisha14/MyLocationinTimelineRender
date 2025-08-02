@@ -96,13 +96,13 @@ export default function CustomerFormModal({
         // Editar cliente
         console.log('Editing customer:', formData);
         await axios.put(
-          `http://localhost:5000/api/customers/${customerToEdit.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL/api/customers/${customerToEdit.id}`,
           formData
         );
       } else {
         // Crear cliente
         console.log('Creating new customer:', formData);
-        await axios.post('http://localhost:5000/api/customers', formData);
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/customers`, formData);
       }
 
       onCustomerAdded(); // Actualizar la lista de clientes en el componente padre

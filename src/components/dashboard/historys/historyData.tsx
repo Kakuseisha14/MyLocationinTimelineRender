@@ -11,13 +11,13 @@ interface History {
 
 async function fetchHistorys(): Promise<History[]> {
   try {
-    const response = await axios.get('http://localhost:5000/api/history-events');
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/history-events`);
     console.log('Fetched History Events:', response.data); // Imprime los datos recibidos
     const newHistorys = response.data.map((item: any) => ({
       id: item.id.toString(),
       title: item.titulo,
       description: item.fragmento,
-      logo: `http://localhost:5000/uploads/${item.img}`, // Ajusta la ruta de la imagen
+      logo: `${process.env.NEXT_PUBLIC_API_URL}/uploads/${item.img}`, // Ajusta la ruta de la imagen
       installs: Math.floor(Math.random() * 1000),
       updatedAt: new Date(item.fecha),
     }));

@@ -118,12 +118,12 @@ export default function HistoryEventFormModal({
     try {
       if (eventToEdit) {
         await axios.put(
-          `http://localhost:5000/api/history-events/${eventToEdit.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/history-events/${eventToEdit.id}`,
           formPayload,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
       } else {
-        await axios.post('http://localhost:5000/api/history-events', formPayload, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/history-events`, formPayload, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
       }

@@ -58,7 +58,7 @@ export default function Page(): React.JSX.Element {
  const fetchCustomers = async () => {
   setLoading(true);
   try {
-    const response = await axios.get('http://localhost:5000/api/customers');
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/customers`);
     setCustomers(response.data);
   } catch (err) {
     console.error('Error fetching customers:', err);
@@ -94,7 +94,7 @@ const handleDeleteCustomerConfirmation = (customerId: string) => {
 const handleDeleteCustomer = async () => {
   if (!customerIdToDelete) return;
   try {
-    await axios.delete(`http://localhost:5000/api/customers/${customerIdToDelete}`);
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/customers/${customerIdToDelete}`);
     fetchCustomers(); // Actualizar lista después de eliminar
     setIsDeleteDialogOpen(false); // Cerrar diálogo
   } catch (error) {
