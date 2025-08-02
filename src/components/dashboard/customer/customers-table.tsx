@@ -23,7 +23,7 @@ function noop(): void {
 }
 
 export interface Customer {
-  id: string;
+  id: number;
   avatar: string;
   name: string;
   email: string;

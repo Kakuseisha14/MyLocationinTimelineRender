@@ -23,7 +23,12 @@ interface Customer {
   name: string;
   email: string;
   phone: string;
-  address: string;
+  address: {
+    city: string;
+    state: string;
+    country: string;
+    street: string;
+  };
 }
 
 const modalStyle = {
@@ -48,7 +53,7 @@ export default function CustomerFormModal({
     name: '',
     email: '',
     phone: '',
-    address: '',
+    address: { city: '', state: '', country: '', street: '' },
   });
 
   const [loading, setLoading] = useState(false);
@@ -70,7 +75,7 @@ export default function CustomerFormModal({
         name: '',
         email: '',
         phone: '',
-        address: '',
+        address: { city: '', state: '', country: '', street: '' },
       });
     }
   }, [customerToEdit]);

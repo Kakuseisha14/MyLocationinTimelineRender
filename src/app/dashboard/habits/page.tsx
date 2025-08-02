@@ -49,6 +49,9 @@ export default function Page(): React.JSX.Element {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [customerIdToDelete, setCustomerIdToDelete] = useState<string | null>(null);
 
+  const [error, setError] = useState<string | null>(null);
+
+
 
 
  // Cargar clientes

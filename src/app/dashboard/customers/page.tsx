@@ -176,7 +176,7 @@ const handleCustomerAdded = () => {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         //onEdit={setCustomerToEdit}
-        onDelete={(id) => console.log('Delete:', id)} // Ejemplo
+       
         onEdit={handleEditCustomer}
         
         onDelete={handleDeleteCustomerConfirmation} // Llama al diálogo de confirmación
