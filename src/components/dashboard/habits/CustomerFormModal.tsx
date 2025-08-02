@@ -96,7 +96,7 @@ export default function CustomerFormModal({
         // Editar cliente
         console.log('Editing customer:', formData);
         await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL/api/customers/${customerToEdit.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${customerToEdit.id}`,
           formData
         );
       } else {
